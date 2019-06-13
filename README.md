@@ -3,21 +3,22 @@ try to build a cpp forth for adafruit samd51 itsybitsy m4
 ## to do
 	0. rom size of at most 6 K bytes
 	1. the first project -- forth script interpreter
-	1.0. ram (DSTKLMT 32, TIBLMT 128, TSBLMT 128)
-	1.0.0. uint32_t dStk[DSTKLMT]; // data stack
-	1.0.1. char tib[TIBLMT]; // terminal input buffer
-	1.0.2. char tsb[TSBLMT]; // token string buffer
+	1.0. ram (DSTKLMT 32 cells, RSTKLMT 32 cells, TIBLMT 128 bytes, TSBLMT 128 bytes)
+	1.0.0. cell_t dStk[DSTKLMT]; // data stack
+	1.0.0. cell_t rStk[RSTKLMT]; // return stack
+	1.0.1. unsigned char tib[TIBLMT]; // terminal input buffer
+	1.0.2. unsigned char stb[TSBLMT]; // string token buffer
 	1.0.3. system variables // cell_t sysCell[32]; uint8_t* sysByte = (uint8_t*) sysCell;
-	1.0.3.0. sysCell[0] // xt // execute token
-	1.0.3.0. sysCell[0]=0; // ip // inner interpreting addr
-	1.0.3.0. sysCell[0]=0; // ip_begin // ip of first execute token
-	1.0.3.0. sysCell[0]=0; // boundayCheck=1 for checking
-	1.0.3.1. sysCell[1]=0; // data stack depth // dDepth <= DSTKLMT
-	1.0.3.3. sysCell[2]=0; // length of Tib // nTib < TIBLMT
-	1.0.3.2. sysCell[3]=0; // parsing entry // toIn <= nTib
-	1.0.3.4. sysCell[4]=0; // execute token // XT // word cfa
-	1.0.3.5. sysCell[5]=0; // number of words in dictionary // nWord
-	1.0.3.6. sysCell[6]=10; // number conversion base // 2 <= base <= 36
+	1.0.3.0. sysCell[0]=0; // xtb // the xt, execute token, to boot the system // xt is iRomWord + 1
+	1.0.3.0. sysCell[1]=0; // ip // inner interpreting pointer
+	1.0.3.0. sysCell[2]=0; // ip_begin // begin ip of a high level colon definition
+	1.0.3.0. sysCell[3]=0; // boundayCheck=1 for checking
+	1.0.3.1. sysCell[4]=0; // data stack depth // dDepth <= DSTKLMT
+	1.0.3.3. sysCell[5]=0; // Tib length // nTib < TIBLMT
+	1.0.3.2. sysCell[6]=0; // parsing entry // toIn <= nTib
+	1.0.3.4. sysCell[7]=0; // execute token // XT // word cfa
+	1.0.3.5. sysCell[8]=0; // number of words in dictionary // nWord
+	1.0.3.6. sysCell[9]=10; // number conversion base // 2 <= base <= 36
 	1.0.4. ramWord_t // { cell_t* prev, cell_t* cfa, char name[] } // cfa points to next cell after name
 	1.0.5. ramWord_t ramDict[] // ram wordset
 	1.1. rom
